@@ -11,7 +11,10 @@ Make sure you have the following installed and configured:
 - Kubernetes cluster (local or cloud)
 - `kubectl` configured to communicate with the cluster
 - Helm 3.x installed
+- docker installed
 - Internet access
+- open port 30000,310000
+- add "<public-ip> minio-api.local minio-console.local" this line in /etc/hosts to access on localhost
 
 ---
 
@@ -78,11 +81,11 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
 API Health Check
 ```bash
 
-curl -I http://52.201.244.30:30000/minio/health/ready
+curl -I http://<public-ip>:30000/minio/health/ready
 
 Web UI Access
 
-curl -I http://52.201.244.30:31000
+curl -I http://<public-ip>:31000
 
 Or open in your browser:
 
