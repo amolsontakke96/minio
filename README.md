@@ -13,7 +13,7 @@ Make sure you have the following installed and configured:
 - Helm 3.x installed
 - docker installed
 - Internet access
-- open port 30000,310000
+- open port 30000,31000
 - add "<public-ip> minio-api.local minio-console.local" this line in /etc/hosts to access on localhost
 
 ---
