@@ -1,0 +1,61 @@
+replicaCount: 4  # Number of MinIO pods in distributed mode
+
+image:
+  repository: quay.io/minio/minio:latest
+  args:
+    - "server"
+    - "http://minio-{0...3}.minio.default.svc.cluster.local/export"
+    - "--console-address"
+    - ":9001"  # Expose MinIO web UI on port 9001
+    - "--address"
+    - ":9000"
+
+service:
+  type: NodePort
+  
+  api:
+    port: 9000
+    targetPort: 9000
+    nodePort: 30000
+  
+  web:
+    port: 9001
+    targetPort: 9001
+    nodePort: 31000
+
+serviceAccount:
+  create: true  # Set to true to create a new service account
+  name: ""      # Leave empty to let Kubernetes auto-generate the name, or provide a custom name
+
+ingress:
+  enabled: true  # Set to true to enable ingress configuration if needed
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - minio-api.local
+    - minio-console.local
+
+persistence:
+  enabled: true
+  storageClass: microk8s-hostpath-immediate
+  size: 10Gi
+  accessMode: ReadWriteOnce
+  provisioner: microk8s.io/hostpath
+  volumeBindingMode: Immediate
+  reclaimPolicy: Delete
+
+minio:
+  # Specify the number of pods/nodes in your distributed MinIO setup
+  replicas: 4
+
+  # MinIO distributed mode configuration (important for shared storage)
+  dataDir: /export
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: minio-pvc
+
+env:
+  MINIO_ROOT_USER: "minioadmin"  # Replace with your access key
+  MINIO_ROOT_PASSWORD: "minioadmin"  # Replace with your secret key

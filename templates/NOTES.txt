@@ -1,0 +1,20 @@
+{{- if .Values.ingress.enabled }}
+MinIO is exposed at:
+
+  http://{{ index .Values.ingress.hosts 0 }}
+
+Access it using the credentials stored in the `minio-secret` secret.
+{{- else }}
+MinIO is exposed via a LoadBalancer or ClusterIP service:
+
+  kubectl get svc {{ include "minio.fullname" . }}
+
+Use the credentials in the `minio-secret` Kubernetes secret.
+{{- end }}
+{{- if .Values.ingress.enabled }}
+Access the MinIO API at the following URL:
+  {{- range .Values.ingress.hosts }}
+  - {{ . }}
+  {{- end }}
+{{- end }}
+
