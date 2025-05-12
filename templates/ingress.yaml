@@ -3,32 +3,19 @@ kind: Ingress
 metadata:
   name: {{ include "minio.fullname" . }}
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    kubernetes.io/ingress.class: nginx
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ .Values.ingress.className | quote }}
   rules:
-    - host: {{ index .Values.ingress.hosts 0 }}  # Corrected to use hosts array
-      http:
-        paths:
-        - path: /minio/health/ready
-          pathType: Prefix
-          backend:
-            service:
-              name: {{ include "minio.fullname" . }}
-              port:
-                number: {{ .Values.service.api.port }}
-
-    - host: {{ index .Values.ingress.hosts 1 }}  # Corrected to use hosts array
-      http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: {{ include "minio.fullname" . }}
-              port:
-                number: {{ .Values.service.web.port }}
-
+  - host: {{ index .Values.ingress.hosts 1 }}  # Corrected to use hosts array
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "minio.fullname" . }}
+            port:
+              number: {{ .Values.service.web.port }}

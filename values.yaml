@@ -30,14 +30,13 @@ ingress:
   className: nginx
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    kubernetes.io/ingress.class: nginx
   hosts:
     - minio-api.local
     - minio-console.local
-  tls:
-    - secretName: minio-tls-secret
-      hosts:
-        - minio-api.local
-        - minio-console.local
 
 persistence:
   enabled: true
@@ -63,5 +62,3 @@ env:
   MINIO_ROOT_USER: "minioadmin"  # Replace with your access key
   MINIO_ROOT_PASSWORD: "minioadmin"  # Replace with your secret key
 
-tls:
-  enabled: false

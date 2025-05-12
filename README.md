@@ -13,8 +13,7 @@ Make sure you have the following installed and configured:
 - Helm 3.x installed
 - docker installed
 - Internet access
-- open port 30000,31000
-- add "<ingress-ip> minio-api.local minio-console.local" this line in /etc/hosts to access on localhost
+- add "<vm-public-ip> minio-console.local" this line in /etc/hosts to access on localhost
 
 ---
 
@@ -59,38 +58,21 @@ Use the following command to install it in the ingress-nginx namespace:
 
 helm install ingress-nginx ingress-nginx/ingress-nginx \
   --namespace ingress-nginx \
-  --create-namespace
+  --create-namespace \
+  --set controller.hostNetwork=true
 
 3. Verify the Installation
 
 Check that the controller pod is running:
 ```bash
 kubectl get pods -n ingress-nginx
-kubectl get pods -n ingress-nginx
-
-4. Change the nginx controller type from load balancer to Nodeport
-
-```bash
-helm install ingress-nginx ingress-nginx/ingress-nginx \
-  --namespace ingress-nginx \
-  --create-namespace \
-  --set controller.service.type=NodePort \
-  --set controller.service.nodePorts.http=30080 \
-  --set controller.service.nodePorts.https=30443
 
 🌐 Access MinIO Services
-API Health Check
-```bash
-
-curl -I http://minio-api.local/minio/health/ready
 
 Web UI Access
 
 curl -I http://minio-console.local
 
-Or open in your browser:
-
-http://<public-ip>:31000
 
 
 

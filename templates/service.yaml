@@ -12,10 +12,8 @@ spec:
     - name: api-port
       port: {{ .Values.service.api.port }}
       targetPort: {{ .Values.service.api.targetPort }}
-      nodePort: {{ .Values.service.api.nodePort }}
     
     - name: web-port
       port: {{ .Values.service.web.port }}
       targetPort: {{ .Values.service.web.targetPort }}
-      nodePort: {{ .Values.service.web.nodePort }}
   type: {{ .Values.service.type }}
