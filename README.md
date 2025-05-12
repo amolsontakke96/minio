@@ -76,6 +76,11 @@ Web UI Access
 
 curl -I http://minio-console.local
 
+USERNAME AND PASSWORD TO ACCESS WEBUI
+
+Username: minioadmin
+Password: minioadmin
+
 
 
 
