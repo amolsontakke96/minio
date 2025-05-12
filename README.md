@@ -69,6 +69,28 @@ kubectl get pods -n ingress-nginx
 
 4 Add the following line
 add <vm-public-ip> minio-console.local this line in /etc/hosts to access on localhost
+-------------------------------
+
+For TLS Purpose 
+1 Run the following command to create key and certificate
+
+```bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout tls.key -out tls.crt \
+  -subj "/CN=minio-console.local/O=minio-console.local"
+
+2 Run the following command to create secret
+
+``` bash
+kubectl create secret tls minio-tls \
+  --cert=tls.crt \
+  --key=tls.key \
+  --namespace=default
+
+3 Run command to check if TLS is working
+
+```bash
+curl -k https://minio-console.local
 
 🌐 Access MinIO Services
 
@@ -80,11 +102,6 @@ USERNAME AND PASSWORD TO ACCESS WEBUI
 
 Username: minioadmin
 Password: minioadmin
-
-
-
-
-
 
 
 
