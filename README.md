@@ -67,6 +67,9 @@ Check that the controller pod is running:
 ```bash
 kubectl get pods -n ingress-nginx
 
+4 Add the following line
+add <vm-public-ip> minio-console.local this line in /etc/hosts to access on localhost
+
 🌐 Access MinIO Services
 
 Web UI Access
