@@ -13,7 +13,7 @@ spec:
     - host: {{ index .Values.ingress.hosts 0 }}  # Corrected to use hosts array
       http:
         paths:
-        - path: /
+        - path: /minio/health/ready
           pathType: Prefix
           backend:
             service:

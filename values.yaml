@@ -11,17 +11,15 @@ image:
     - ":9000"
 
 service:
-  type: NodePort
+  type: ClusterIP
   
   api:
     port: 9000
     targetPort: 9000
-    nodePort: 30000
   
   web:
     port: 9001
     targetPort: 9001
-    nodePort: 31000
 
 serviceAccount:
   create: true  # Set to true to create a new service account
@@ -35,6 +33,11 @@ ingress:
   hosts:
     - minio-api.local
     - minio-console.local
+  tls:
+    - secretName: minio-tls-secret
+      hosts:
+        - minio-api.local
+        - minio-console.local
 
 persistence:
   enabled: true
@@ -59,3 +62,6 @@ minio:
 env:
   MINIO_ROOT_USER: "minioadmin"  # Replace with your access key
   MINIO_ROOT_PASSWORD: "minioadmin"  # Replace with your secret key
+
+tls:
+  enabled: false
