@@ -12,10 +12,11 @@ Make sure you have the following installed and configured:
 - `kubectl` configured to communicate with the cluster
 - Helm 3.x installed
 - docker installed
-- For TLS Purpose 
-- 1 Run the following command to create key and certificate
+- For TLS Purpose
 
 ```bash
+1 Run the following command to create key and certificate
+
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -keyout tls.key -out tls.crt \
   -subj "/CN=minio-console.local/O=minio-console.local"
