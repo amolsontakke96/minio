@@ -13,7 +13,7 @@ Make sure you have the following installed and configured:
 - Helm 3.x installed
 - docker installed
 - For TLS Purpose 
-1 Run the following command to create key and certificate
+- 1 Run the following command to create key and certificate
 
 ```bash
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
